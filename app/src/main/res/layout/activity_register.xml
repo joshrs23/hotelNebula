@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="410dp"
@@ -187,7 +188,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextText5" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:text="Already have an account? Login!"
@@ -201,4 +202,5 @@
         android:textSize="15sp"
         android:backgroundTint="#0E2BCF"
         app:cornerRadius="20dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
