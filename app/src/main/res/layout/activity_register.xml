@@ -62,7 +62,6 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/custom_input"
         android:ems="21"
-
         android:hint="Enter your full name"
         android:inputType="text"
         android:paddingStart="12dp"
@@ -184,20 +183,23 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText5" />
+        app:layout_constraintBottom_toTopOf="@id/btnLogin"
+        />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:text="Already have an account? Login!"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="8dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginBottom="24dp"
         android:textAllCaps="false"
         android:textSize="15sp"
-        android:backgroundTint="#0E2BCF" />
+        android:background="@android:color/transparent"
+        android:textColor="@android:color/darker_gray" />
 </androidx.constraintlayout.widget.ConstraintLayout>
