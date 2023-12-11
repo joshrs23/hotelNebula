@@ -33,13 +33,14 @@ public class UserReservationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_reservation);
-        initialize();
         try {
+            //setContentView(R.layout.activity_search);
             Menu.setupBottomNavigationBar(this);
         }catch(Exception e){
             Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
 
         }
+        initialize();
     }
 
     private void initialize() {
