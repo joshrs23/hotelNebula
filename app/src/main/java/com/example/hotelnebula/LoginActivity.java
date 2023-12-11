@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
                         if (emailFromDB.equals(usernameLogin.toLowerCase()) && passFromDB.equals(passwordLogin)) {
                             String namedb = userSnapshot.child("name").getValue(String.class);
                             String userdb = userSnapshot.getKey();
-                            saveUserData(namedb, passwordLogin, usernameLogin, userdb);
+                            saveUserData(namedb, passwordLogin, usernameLogin, userdb,userSnapshot.child("role").getKey());
 
                             Intent intent = new Intent(LoginActivity.this, SearchActivity.class);
                             SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
@@ -121,7 +121,7 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
         });
     }
 
-    private void saveUserData(String name, String password, String email, String username) {
+    private void saveUserData(String name, String password, String email, String username, String role) {
         SharedPreferences preferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("name", name);
