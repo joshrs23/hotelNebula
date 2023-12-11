@@ -36,64 +36,66 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
     private void initilize() {
         btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(this);
+        btnReserve = findViewById(R.id.btnReserve);
+        btnReserve.setOnClickListener(this);
         tvDescription = findViewById(R.id.tvDescription);
-        tvDescription.setText("Room reserved!, look into your reservations.");
+        ivRoom = findViewById(R.id.ivRoom);
 
-//        Intent intent = getIntent();
-//        if (intent != null && intent.hasExtra("RoomType") ) {
-//            String roomType = intent.getStringExtra("RoomType");
-//            int resID = getResources().getIdentifier(roomType, "drawable", getPackageName());
-//            ivRoom.setImageResource(resID);
-//            tvDescription.setText("Room reserved!, look into your reservations.");
-//            findRoom(intent);
-//        }
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("RoomType") ) {
+            String roomType = intent.getStringExtra("RoomType");
+            int resID = getResources().getIdentifier(roomType, "drawable", getPackageName());
+            ivRoom.setImageResource(resID);
+            tvDescription.setText("Room reserved!, look into your reservations.");
+            findRoom(intent);
+        }
     }
 
-//    private void findRoom(Intent intent) {
-//            String arrivalDate = intent.getStringExtra("ArrivalDate");
-//            String departureDate = intent.getStringExtra("DepartureDate");
-//            DatabaseReference reservationsRef = FirebaseDatabase.getInstance().getReference("reservations");
-//            DatabaseReference roomsRef = FirebaseDatabase.getInstance().getReference("rooms");
-//
-//            Query reservationsQuery = reservationsRef.orderByChild("date").startAt(arrivalDate).endAt(departureDate);
-//            reservationsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                    for (DataSnapshot reservationSnapshot : dataSnapshot.getChildren()) {
-//                        String roomId = reservationSnapshot.child("roomId").getValue(String.class);
-//                        Query availableRoomsQuery = roomsRef.orderByChild("availability").equalTo("available");
-//                        availableRoomsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                                boolean roomAvailable = true;
-//                                String finalRoomId = "";
-//                                for (DataSnapshot roomSnapshot : dataSnapshot.getChildren()) {
-//                                    String availableRoomId = roomSnapshot.getKey();
-//                                    if (availableRoomId.equals(roomId)) {
-//                                        roomAvailable = false;
-//                                        break;
-//                                    }
-//                                    finalRoomId = availableRoomId;
-//                                }
-//                                if (roomAvailable) {
-//                                    tvDescription.setText(finalRoomId);
-//                                } else {
-//                                    tvDescription.setText("Sorry not rooms available with those parameters.");
-//                                }
-//                            }
-//                            @Override
-//                            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                                Toast.makeText(SearchResults.this, databaseError.toString(), Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                    }
-//                }
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//                    Toast.makeText(SearchResults.this, databaseError.toString(), Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//    }
+    private void findRoom(Intent intent) {
+            String arrivalDate = intent.getStringExtra("ArrivalDate");
+            String departureDate = intent.getStringExtra("DepartureDate");
+            DatabaseReference reservationsRef = FirebaseDatabase.getInstance().getReference("reservations");
+            DatabaseReference roomsRef = FirebaseDatabase.getInstance().getReference("rooms");
+
+            Query reservationsQuery = reservationsRef.orderByChild("date").startAt(arrivalDate).endAt(departureDate);
+            reservationsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot reservationSnapshot : dataSnapshot.getChildren()) {
+                        String roomId = reservationSnapshot.child("roomId").getValue(String.class);
+                        Query availableRoomsQuery = roomsRef.orderByChild("availability").equalTo("available");
+                        availableRoomsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                boolean roomAvailable = true;
+                                String finalRoomId = "";
+                                for (DataSnapshot roomSnapshot : dataSnapshot.getChildren()) {
+                                    String availableRoomId = roomSnapshot.getKey();
+                                    if (availableRoomId.equals(roomId)) {
+                                        roomAvailable = false;
+                                        break;
+                                    }
+                                    finalRoomId = availableRoomId;
+                                }
+                                if (roomAvailable) {
+                                    tvDescription.setText(finalRoomId);
+                                } else {
+                                    tvDescription.setText("Sorry not rooms available with those parameters.");
+                                }
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                Toast.makeText(SearchResults.this, databaseError.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(SearchResults.this, databaseError.toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
+    }
 
     @Override
     public void onClick(View v) {
@@ -101,9 +103,9 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
         if(id == R.id.btnBack){
             finish();
         }
-//        if(id == R.id.btnReserve){
-//            reserveRoom();
-//        }
+        if(id == R.id.btnReserve){
+            reserveRoom();
+        }
     }
 
     private void reserveRoom() {

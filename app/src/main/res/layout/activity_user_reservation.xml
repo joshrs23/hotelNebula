@@ -30,13 +30,14 @@
     </LinearLayout>
     <ListView
         android:id="@+id/lvReservations"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/ly_title_reservation"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="40dp"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/menu"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp" />
     <include
         layout="@layout/menu"
         android:layout_width="match_parent"

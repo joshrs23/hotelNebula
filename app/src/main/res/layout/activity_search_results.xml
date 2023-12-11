@@ -64,14 +64,14 @@
         android:textSize="30sp"
         />
 
-<!--    <Button-->
-<!--        android:id="@+id/btnReserve"-->
-<!--        android:layout_width="300dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Reserve"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        />-->
+    <Button
+        android:id="@+id/btnReserve"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Reserve"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
