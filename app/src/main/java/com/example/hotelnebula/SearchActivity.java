@@ -40,47 +40,45 @@ public class SearchActivity extends AppCompatActivity {
         imgGrandRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendData("Grand", v);
+                sendData("Grand Room", "grand_room",v);
             }
         });
         imgCozyRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendData("Cozy", v);
+                sendData("Cozy Room", "cozy_room",v);
             }
         });
         imgPentHouse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendData("Pent", v);
+                sendData("Penthouse", "penthouse_room", v);
             }
         });
         imgSuiteRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendData("Suite", v);
+                sendData("Suite Room", "suite_room", v);
             }
         });
         imgSingleRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendData("Single", v);
+                sendData("Single Room", "single_room", v);
             }
         });
         imgDoubleRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendData("Double", v);
+                sendData("Double Room", "double_room", v);
             }
         });
     }
 
-    private void sendData(String roomType, View v) {
-        //TODO change the second parameter to aldo's show available view
-        //Intent intent = new Intent(this, UserInfoActivity.class);
-        //intent.putExtra("RoomType", roomType);
-        //startActivity(intent);
-
-        Snackbar.make(v,roomType, Toast.LENGTH_LONG).show();
+    private void sendData(String roomType, String imageResource, View v) {
+        Intent intent = new Intent(this, SearchSpecificActivity.class);
+        intent.putExtra("RoomType", roomType);
+        intent.putExtra("ImageResource", imageResource);
+        startActivity(intent);
     }
 }
