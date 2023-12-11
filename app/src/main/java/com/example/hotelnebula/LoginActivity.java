@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
                             String userdb = userSnapshot.getKey();
                             saveUserData(namedb, passwordLogin, usernameLogin, userdb);
 
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, SearchActivity.class);
                             SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("username", usernameLogin.toLowerCase());
