@@ -5,9 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.hotelnebula.R;
 
@@ -46,7 +44,7 @@ public class UserAdapter extends BaseAdapter {
         TextView tvFullName,  tvTeamName;
 
         LayoutInflater inflater = LayoutInflater.from(context);
-        oneItem = inflater.inflate(R.layout.one_item, viewGroup, false);
+        oneItem = inflater.inflate(R.layout.one_user, viewGroup, false);
 
         tvFullName = oneItem.findViewById(R.id.tvFullName);
         tvTeamName = oneItem.findViewById(R.id.tvTeamName);
