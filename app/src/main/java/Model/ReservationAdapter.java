@@ -99,9 +99,11 @@ public class ReservationAdapter extends BaseAdapter {
         return oneItem;
     }
     public void reloadData(ArrayList<Reservations> newReservations) {
+
         this.reservationList.clear();
         this.reservationList.addAll(newReservations);
         notifyDataSetChanged();
+        
     }
 
     public void checkPhotoRoom(int room, ImageView imageView, RoomLoadedCallback callback) {

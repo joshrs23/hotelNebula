@@ -44,11 +44,13 @@ public class UserReservationActivity extends AppCompatActivity {
     }
 
     private void initialize() {
-        /*reservationsList = new ArrayList<>();
+        /*
+        reservationsList = new ArrayList<>();
         lvReservation = findViewById(R.id.lvReservations);
         this.checkReservation();
         reservationAdapter = new ReservationAdapter(this,reservationsList);
-        lvReservation.setAdapter(reservationAdapter);*/
+        lvReservation.setAdapter(reservationAdapter);
+        */
         reservationsList = new ArrayList<>();
         lvReservation = findViewById(R.id.lvReservations);
         reservationAdapter = new ReservationAdapter(this, new ArrayList<>());
