@@ -74,7 +74,6 @@ public class ReservationAdapter extends BaseAdapter {
         imPhoto = oneItem.findViewById(R.id.imPhoto);
 
 
-        //4-Populate the widgets of one_item.xml
 
         oneReservation = (Reservations) getItem(position);
         //tvRoomName.setText(oneReservation.getUser());
