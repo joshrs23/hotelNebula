@@ -1,5 +1,119 @@
 package Model;
 
-public class ReservationAdapter {
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.example.hotelnebula.LoginActivity;
+import com.example.hotelnebula.R;
+import com.example.hotelnebula.SearchActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
+public class ReservationAdapter extends BaseAdapter {
+    private Context context;
+    private ArrayList<Reservations> reservationList;
+    private Reservations oneReservation;
+
+    private String photoFromDB;
+
+    public ReservationAdapter(Context context, ArrayList<Reservations> reservationList) {
+        this.context = context;
+        this.reservationList = reservationList;
+    }
+
+
+    @Override
+    public int getCount() {
+        return reservationList.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return reservationList.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup viewGroup) {
+        //1- Required declaration
+
+        View oneItem = null;
+        ImageView imPhoto;
+        TextView tvRoomName, tvEvendate;
+
+        //2- Convert the layout one_item.xml ---> java view object
+        //Layout Inflation
+
+        LayoutInflater inflater = LayoutInflater.from(context);
+        oneItem = inflater.inflate(R.layout.one_item, viewGroup,false);//false is not root //true this item is the root
+
+        //3-Reference the widgets of one_item.xml
+        tvRoomName = oneItem.findViewById(R.id.tvRoomName);
+        tvEvendate = oneItem.findViewById(R.id.tvEvendate);
+        imPhoto = oneItem.findViewById(R.id.imPhoto);
+
+
+        //4-Populate the widgets of one_item.xml
+
+        oneReservation = (Reservations) getItem(position);
+        tvRoomName.setText(oneReservation.getUser());
+        tvEvendate.setText(oneReservation.getReservationDate());
+        this.checkPhotoRoom(oneReservation.getRoomdId());
+        String photoName = this.photoFromDB;
+        int imPhotoRes = context.getResources().getIdentifier("drawable/"+photoName,null,context.getPackageName());
+        imPhoto.setImageResource(imPhotoRes);
+
+        return oneItem;
+    }
+
+    public void checkPhotoRoom(int room) {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Rooms");
+        Query checkRoomdata = reference.orderByChild("id").equalTo(room);
+        this.photoFromDB="";
+
+        checkRoomdata.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                        String roomFromDB = userSnapshot.child("id").getValue(String.class);
+
+                        if (roomFromDB.equals(room)) {
+
+                             photoFromDB = userSnapshot.child("photo").getValue(String.class);
+
+                            return;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+                Log.e("ReservationAdapter", "Database Error: " + error.getMessage());
+            }
+        });
+    }
 }
