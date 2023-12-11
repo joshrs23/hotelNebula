@@ -3,48 +3,48 @@ package Model;
 import androidx.annotation.NonNull;
 
 public class Reservations {
-    private int UserId;
-    private int RoomdId;
-    private String ReservationDate;
-    private String ExpectedCheckout;
+    private String User;
+    private int RoomNumber;
+    private String CheckInDate;
+    private String CheckOutDate;
 
-    public Reservations(int userId, int roomdId, String reservationDate, String expectedCheckout) {
-        UserId = userId;
-        RoomdId = roomdId;
-        ReservationDate = reservationDate;
-        ExpectedCheckout = expectedCheckout;
+    public Reservations(String user, int roomNumber, String checkInDate, String checkOutDate) {
+        User = user;
+        RoomNumber = roomNumber;
+        CheckInDate = checkInDate;
+        CheckOutDate = checkOutDate;
     }
 
-    public int getUserId() {
-        return UserId;
+    public String getUser() {
+        return User;
     }
 
-    public void setUserId(int userId) {
-        UserId = userId;
+    public void setUser(String user) {
+        User = user;
     }
 
     public int getRoomdId() {
-        return RoomdId;
+        return RoomNumber;
     }
 
-    public void setRoomdId(int roomdId) {
-        RoomdId = roomdId;
+    public void setRoomdId(int roomNumber) {
+        RoomNumber = roomNumber;
     }
 
     public String getReservationDate() {
-        return ReservationDate;
+        return CheckInDate;
     }
 
-    public void setReservationDate(String reservationDate) {
-        ReservationDate = reservationDate;
+    public void setReservationDate(String checkInDate) {
+        CheckInDate = checkInDate;
     }
 
     public String getExpectedCheckout() {
-        return ExpectedCheckout;
+        return CheckOutDate;
     }
 
-    public void setExpectedCheckout(String expectedCheckout) {
-        ExpectedCheckout = expectedCheckout;
+    public void setExpectedCheckout(String checkOutDate) {
+        CheckOutDate = checkOutDate;
     }
 
     @NonNull
