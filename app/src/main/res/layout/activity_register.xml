@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/edFullName"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginTop="8dp"
@@ -78,10 +78,10 @@
         android:layout_marginTop="8dp"
         android:text="Username"
         app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+        app:layout_constraintTop_toBottomOf="@+id/edFullName" />
 
     <EditText
-        android:id="@+id/editTextText2"
+        android:id="@+id/edUsername"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginTop="8dp"
@@ -103,10 +103,10 @@
         android:layout_marginTop="8dp"
         android:text="Email"
         app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
+        app:layout_constraintTop_toBottomOf="@+id/edUsername" />
 
     <EditText
-        android:id="@+id/editTextText3"
+        android:id="@+id/edEmail"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginTop="8dp"
@@ -128,10 +128,10 @@
         android:layout_marginTop="8dp"
         android:text="Password"
         app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
+        app:layout_constraintTop_toBottomOf="@+id/edEmail" />
 
     <EditText
-        android:id="@+id/editTextText4"
+        android:id="@+id/edPassword"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginTop="8dp"
@@ -153,10 +153,10 @@
         android:layout_marginTop="8dp"
         android:text="Confirm your password"
         app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText4" />
+        app:layout_constraintTop_toBottomOf="@+id/edPassword" />
 
     <EditText
-        android:id="@+id/editTextText5"
+        android:id="@+id/edConfirmPassword"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginTop="8dp"
