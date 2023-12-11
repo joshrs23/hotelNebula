@@ -147,7 +147,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edite Profile"
+        android:text="Edit Profile"
         android:layout_marginTop="30dp"
         android:id="@+id/editprofile"/>
 
