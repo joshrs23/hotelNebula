@@ -35,7 +35,7 @@ public class ProfileActivity extends AppCompatActivity implements  View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         try {
-            setContentView(R.layout.activity_search);
+            //setContentView(R.layout.activity_search);
             Menu.setupBottomNavigationBar(this);
         }catch(Exception e){
             Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
