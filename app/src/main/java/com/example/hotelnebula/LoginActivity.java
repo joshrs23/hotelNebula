@@ -75,22 +75,20 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
         String passwordLogin = loginPass.getText().toString().trim();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-        Query checkuserdata = reference.orderByChild("email").equalTo(usernameLogin);
+        Query checkuserdata = reference.child(usernameLogin);
 
         checkuserdata.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                        String emailFromDB = userSnapshot.child("email").getValue(String.class);
                         //Long passwordLong = userSnapshot.child("password").getValue(Long.class);
                         //String passFromDB = String.valueOf(passwordLong);
-                        String passFromDB = userSnapshot.child("password").getValue(String.class);
+                        String passFromDB = snapshot.child("password").getValue(String.class);
 
-                        if (emailFromDB.equals(usernameLogin.toLowerCase()) && passFromDB.equals(passwordLogin)) {
-                            String namedb = userSnapshot.child("name").getValue(String.class);
-                            String userdb = userSnapshot.getKey();
-                            saveUserData(namedb, passwordLogin, usernameLogin, userdb,userSnapshot.child("role").getKey());
+                        if (passFromDB.equals(passwordLogin)) {
+                            String namedb = snapshot.child("name").getValue(String.class);
+                            String userdb = snapshot.getKey();
+                            saveUserData(namedb, passwordLogin, snapshot.child("email").getValue().toString(), snapshot.getKey().toString(),snapshot.child("role").getValue().toString());
 
                             Intent intent = new Intent(LoginActivity.this, SearchActivity.class);
                             SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
@@ -106,7 +104,6 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
                             Toast.makeText(LoginActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
                             Log.d("LoginActivity", "Invalid email or password");
                         }
-                    }
                 } else {
                     Toast.makeText(LoginActivity.this, "The person does not exist", Toast.LENGTH_SHORT).show();
                     Log.d("LoginActivity", "User does not exist");
