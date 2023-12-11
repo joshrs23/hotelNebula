@@ -20,6 +20,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import Model.Reservations;
 
 public class SearchResults extends AppCompatActivity implements View.OnClickListener{
@@ -64,23 +67,24 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
         String roomTypeTitle = intent.getStringExtra("RoomType");
 
         DatabaseReference roomsRef = FirebaseDatabase.getInstance().getReference("Rooms");
+        Query checkReservationData = roomsRef.orderByChild("photo").equalTo(roomTypeTitle);
 
-        final String[] foundRoomId = {""}; // Variable to store the found roomId
-        roomsRef.addValueEventListener(new ValueEventListener()  {
+        final String[] foundRoomId = {""};
+        checkReservationData.addValueEventListener(new ValueEventListener()  {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot roomSnapshot : dataSnapshot.getChildren()) {
                             roomId = roomSnapshot.getKey();
 
-                            DatabaseReference reservationsRef = FirebaseDatabase.getInstance().getReference("reservations");
-                            reservationsRef.orderByChild("id").equalTo(roomId)
-                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                            DatabaseReference reservationsRef = FirebaseDatabase.getInstance().getReference("Reservations");
+//                            Query checkReservationsRoom = reservationsRef.orderByChild("RoomNumber").equalTo(roomId);
+                            reservationsRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             boolean roomAvailable = true;
                                             for (DataSnapshot reservationSnapshot : snapshot.getChildren()) {
-                                                String reservationArrivalDate = reservationSnapshot.child("arrivalDate").getValue(String.class);
-                                                String reservationDepartureDate = reservationSnapshot.child("departureDate").getValue(String.class);
+                                                String reservationArrivalDate = reservationSnapshot.child("CheckInDate").getValue(String.class);
+                                                String reservationDepartureDate = reservationSnapshot.child("CheckOutDate").getValue(String.class);
 
                                                 if ((arrivalDate.compareTo(reservationDepartureDate) < 0 && departureDate.compareTo(reservationArrivalDate) > 0)) {
                                                     roomAvailable = false;
@@ -92,23 +96,23 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
                                                 roomFound[0] = true;
                                                 foundRoomId[0] = roomId;
                                                 tvDescription.setText(roomId);
+                                                btnReserve.setVisibility(View.VISIBLE);
                                                 return;
                                             }
                                         }
-
                                         @Override
                                         public void onCancelled(@NonNull DatabaseError error) {
                                         }
                                     });
-
                             if (roomFound[0]) {
                                 break;
                             }
                         }
-
                         if (roomFound[0]) {
+                            finish();
                         } else {
                             tvDescription.setText("No rooms found with those parameters.");
+                            btnReserve.setVisibility(View.GONE);
                         }
                     }
 
@@ -132,31 +136,35 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
     }
 
     private void reserveRoom() {
-            String arrivalDate = getIntent().getStringExtra("ArrivalDate");
-            String departureDate = getIntent().getStringExtra("DepartureDate");
-            DatabaseReference reservationsRef = FirebaseDatabase.getInstance().getReference("reservations");
+        String arrivalDate = getIntent().getStringExtra("ArrivalDate");
+        String departureDate = getIntent().getStringExtra("DepartureDate");
+        DatabaseReference reservationsRef = FirebaseDatabase.getInstance().getReference("Reservations");
 
-            if (roomFound[0]) {
-                String roomNumber = roomId;
-                if (!roomNumber.isEmpty()) {
-                    SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
-                    String username = sharedPreferences.getString("username","");
+        if (roomFound[0]) {
+            String roomNumber = roomId;
+            if (!roomNumber.isEmpty()) {
+                SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+                String username = sharedPreferences.getString("username", "");
 
-                    Reservations newReservation = new Reservations(username, Integer.parseInt(roomNumber), arrivalDate, departureDate);
+                Map<String, Object> reservationData = new HashMap<>();
+                reservationData.put("User", username);
+                reservationData.put("RoomNumber", Integer.parseInt(roomNumber));
+                reservationData.put("CheckInDate", arrivalDate);
+                reservationData.put("CheckOutDate", departureDate);
 
-                    reservationsRef.push().setValue(newReservation)
-                            .addOnCompleteListener(task -> {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(this, "Room reserved successfully!", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(this, "Failed to reserve the room. Please try again.", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                } else {
-                    Toast.makeText(SearchResults.this, "Room number is empty!", Toast.LENGTH_SHORT).show();
-                }
+                reservationsRef.push().setValue(reservationData)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(this, "Room reserved successfully!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(this, "Failed to reserve the room. Please try again.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
             } else {
-                Toast.makeText(SearchResults.this, "No available room found to reserve.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SearchResults.this, "Room number is empty!", Toast.LENGTH_SHORT).show();
             }
+        } else {
+            Toast.makeText(SearchResults.this, "No available room found to reserve.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
