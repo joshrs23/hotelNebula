@@ -77,7 +77,6 @@ public class SearchSpecificActivity extends AppCompatActivity implements View.On
             int resID = getResources().getIdentifier(imageResource, "drawable", getPackageName());
             banner.setImageResource(resID);
             roomSubtitle.setText(roomType);
-            Toast.makeText(this, "Received Room Type: " + roomType, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -119,25 +118,31 @@ public class SearchSpecificActivity extends AppCompatActivity implements View.On
     private void searchRoom() {
         String arrivalDateString = arrivalDateButton.getText().toString();
         String departureDateString = departureDateButton.getText().toString();
+        int selectedPersons = optionsSeekBar.getProgress() + 1;
 
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-        Date currentDate = new Date(); // Current date
+        Date currentDate = new Date();
 
         try {
             Date arrivalDate = sdf.parse(arrivalDateString);
             Date departureDate = sdf.parse(departureDateString);
 
-            // Check if arrival date is before the current date
             if (arrivalDate.before(currentDate)) {
                 Toast.makeText(this, "Arrival date cannot be before the current date.", Toast.LENGTH_LONG).show();
             } else if (arrivalDate.after(departureDate) || arrivalDate.equals(departureDate)) {
                 Toast.makeText(this, "Arrival date cannot be after or the same as departure date.", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "Success!", Toast.LENGTH_LONG).show();
-                // Proceed with room search or other actions
+                Intent intent = new Intent(this, SearchResults.class);
+                intent.putExtra("RoomType", roomSubtitle.getText().toString());
+                intent.putExtra("ArrivalDate", arrivalDateString);
+                intent.putExtra("DepartureDate", departureDateString);
+                intent.putExtra("NumberOfPersons", selectedPersons);
+
+                startActivity(intent);
             }
         } catch (ParseException e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
+
 }
