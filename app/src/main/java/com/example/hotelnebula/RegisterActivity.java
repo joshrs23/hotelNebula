@@ -16,6 +16,8 @@ public class RegisterActivity extends AppCompatActivity {
     Button btnCreateAccount, btnGoTOLogIn;
     DatabaseReference usersDatabase;
 
+    Button btnLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,5 +64,13 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+    private void initialize() {
+        btnLogin = findViewById(R.id.btnLogin);
+        btnLogin.setOnClickListener(this);
     }
+    private void goToLogin() {
+        Intent intent =new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
 }
