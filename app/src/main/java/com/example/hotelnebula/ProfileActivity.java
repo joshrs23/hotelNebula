@@ -21,6 +21,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import Model.Menu;
+
 public class ProfileActivity extends AppCompatActivity implements  View.OnClickListener{
 
     TextView profilename,profileEmail,profilePass,profileusername;
@@ -32,7 +34,13 @@ public class ProfileActivity extends AppCompatActivity implements  View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        try {
+            setContentView(R.layout.activity_search);
+            Menu.setupBottomNavigationBar(this);
+        }catch(Exception e){
+            Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
 
+        }
         initialize();
     }
 
