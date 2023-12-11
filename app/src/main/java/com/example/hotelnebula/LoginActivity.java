@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
                         if (emailFromDB.equals(usernameLogin.toLowerCase()) && passFromDB.equals(passwordLogin)) {
                             String namedb = userSnapshot.child("name").getValue(String.class);
 
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, SearchActivity.class);
                             intent.putExtra("name", namedb);
                             Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
                             startActivity(intent);
