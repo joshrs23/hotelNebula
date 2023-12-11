@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -38,6 +39,7 @@ public class WelcomeActivity extends AppCompatActivity implements  View.OnClickL
     }
 
     private void goToLogin() {
+        Log.d("WelcomeActivity", "goToLogin called");
         Intent intent =new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
