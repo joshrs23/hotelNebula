@@ -8,11 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.google.firebase.database.DataSnapshot;
+import android.util.Log;
 
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -40,6 +39,7 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
         // Onclick
+        btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
     }
 
@@ -54,51 +54,59 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
     }
 
     private void goToRegister() {
-        Intent intent =new Intent(this, RegisterActivity.class);
+        Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 
-    public void checkUser(){
+    private void checkFields(){
+        String username = loginUsername.getText().toString().trim();
+        String password = loginPass.getText().toString().trim();
+
+        if (username.isEmpty() || password.isEmpty()) {
+            Toast.makeText(LoginActivity.this, "Please fill up the information", Toast.LENGTH_SHORT).show();
+            Log.d("LoginActivity", "Empty fields detected");
+        }
+    }
+
+    public void checkUser() {
+        checkFields();
         String usernameLogin = loginUsername.getText().toString().trim();
         String passwordLogin = loginPass.getText().toString().trim();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-        Query checkuserdata = reference.orderByChild("username").equalTo(usernameLogin);
 
-        checkuserdata.addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.child(usernameLogin).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
+                if (snapshot.exists()) {
+                    String passFromDB = snapshot.child("Password").getValue(String.class);
 
-                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                        String passFromDB = userSnapshot.child("password").getValue(String.class);
+                    if (passFromDB.equals(passwordLogin)) {
+                        String namedb = snapshot.child("Name").getValue(String.class);
 
-                        if(passFromDB.equals(passwordLogin)){
-
-                            String namedb = userSnapshot.child("name").getValue(String.class);
-
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            intent.putExtra("name", namedb);
-                            Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
-                            startActivity(intent);
-                            finish();
-                            return;
-                        }
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.putExtra("Name", namedb);
+                        Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
+                        //finish();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Your password is wrong", Toast.LENGTH_SHORT).show();
+                        Log.d("LoginActivity", "Password is wrong");
                     }
-                    Toast.makeText(LoginActivity.this, "Your password is wrong", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else {
                     Toast.makeText(LoginActivity.this, "The person does not exist", Toast.LENGTH_SHORT).show();
+                    Log.d("LoginActivity", "User does not exist");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(LoginActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("LoginActivity", "Database Error: " + error.getMessage());
             }
         });
-
     }
+
 
 
 }

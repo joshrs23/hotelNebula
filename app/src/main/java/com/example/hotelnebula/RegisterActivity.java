@@ -28,7 +28,7 @@ public class RegisterActivity extends AppCompatActivity implements  View.OnClick
         btnLogin.setOnClickListener(this);
     }
     private void goToLogin() {
-        Intent intent =new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
