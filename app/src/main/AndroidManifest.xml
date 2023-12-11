@@ -19,6 +19,13 @@
             android:name=".EditProfileActivity"
             android:exported="false" />
         <activity
+            android:name=".UserInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserListViewActivity"
+            android:exported="false">
+        </activity>
+        <activity
             android:name=".ProfileActivity"
             android:exported="false" />
         <activity
