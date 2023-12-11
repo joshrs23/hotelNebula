@@ -1,8 +1,13 @@
 package Model;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.hotelnebula.ProfileActivity;
 import com.example.hotelnebula.R;
+import com.example.hotelnebula.SearchActivity;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class menu extends AppCompatActivity {
@@ -26,5 +31,7 @@ public class menu extends AppCompatActivity {
 
     private void navigateToProfile() {
         // Implementa la navegación al Profile
+        Intent intent =new Intent(this, ProfileActivity.class);
+        startActivity(intent);
     }
 }

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -88,8 +89,10 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
 
                         if (emailFromDB.equals(usernameLogin.toLowerCase()) && passFromDB.equals(passwordLogin)) {
                             String namedb = userSnapshot.child("name").getValue(String.class);
+                            String userdb = userSnapshot.getKey();
+                            saveUserData(namedb, passwordLogin, usernameLogin, userdb);
 
-                            Intent intent = new Intent(LoginActivity.this, SearchActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             intent.putExtra("name", namedb);
                             Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
                             startActivity(intent);
@@ -114,7 +117,15 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
         });
     }
 
-
+    private void saveUserData(String name, String password, String email, String username) {
+        SharedPreferences preferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("name", name);
+        editor.putString("password", password);
+        editor.putString("email", email);
+        editor.putString("username", username);
+        editor.apply();
+    }
 
 
 }
