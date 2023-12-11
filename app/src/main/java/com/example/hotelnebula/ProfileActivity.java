@@ -64,11 +64,7 @@ public class ProfileActivity extends AppCompatActivity implements  View.OnClickL
         SharedPreferences preferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
         String role = preferences.getString("role", "No UserAvailable");
 
-        if (!role.equals("Employee")) {
-            btnSchedule.setVisibility(View.INVISIBLE);
-        }
-
-        else
+        if (role.equals("Employee")) {
             btnSchedule.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -76,6 +72,22 @@ public class ProfileActivity extends AppCompatActivity implements  View.OnClickL
                     startActivity(intent);
                 }
             });
+        } else if (role.equals("Admin")) {
+
+            btnSchedule.setText("Check users");
+            btnSchedule.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(ProfileActivity.this,UserListViewActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+        } else {
+
+            btnSchedule.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     @Override
