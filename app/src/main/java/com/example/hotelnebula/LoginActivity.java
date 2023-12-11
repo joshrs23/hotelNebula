@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
         String password = loginPass.getText().toString().trim();
 
         if (username.isEmpty() || password.isEmpty()) {
-            Toast.makeText(LoginActivity.this, "Please fill up the information", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please fill up the information", Toast.LENGTH_SHORT).show();
             Log.d("LoginActivity", "Empty fields detected");
         }
     }
@@ -74,24 +74,30 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
         String passwordLogin = loginPass.getText().toString().trim();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+        Query checkuserdata = reference.orderByChild("Email").equalTo(usernameLogin);
 
-        reference.child(usernameLogin).addListenerForSingleValueEvent(new ValueEventListener() {
+        checkuserdata.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    String passFromDB = snapshot.child("Password").getValue(String.class);
+                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                        String emailFromDB = userSnapshot.child("Email").getValue(String.class);
+                        Long passwordLong = userSnapshot.child("Password").getValue(Long.class);
+                        String passFromDB = String.valueOf(passwordLong);
 
-                    if (passFromDB.equals(passwordLogin)) {
-                        String namedb = snapshot.child("Name").getValue(String.class);
+                            if (emailFromDB.equals(usernameLogin) && passFromDB.equals(passwordLogin)) {
+                            String namedb = userSnapshot.child("Name").getValue(String.class);
 
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.putExtra("Name", namedb);
-                        Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
-                        startActivity(intent);
-                        //finish();
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Your password is wrong", Toast.LENGTH_SHORT).show();
-                        Log.d("LoginActivity", "Password is wrong");
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.putExtra("Name", namedb);
+                            Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
+                            startActivity(intent);
+                            finish();
+                            return;
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
+                            Log.d("LoginActivity", "Invalid email or password");
+                        }
                     }
                 } else {
                     Toast.makeText(LoginActivity.this, "The person does not exist", Toast.LENGTH_SHORT).show();
@@ -106,6 +112,7 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
             }
         });
     }
+
 
 
 
