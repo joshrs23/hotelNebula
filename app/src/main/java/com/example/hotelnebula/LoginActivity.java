@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
                             Intent intent = new Intent(LoginActivity.this, SearchActivity.class);
                             SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("username", usernameLogin.toLowerCase());
+                            editor.putString("username", usernameLogin);
                             editor.apply();
 
                             Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
