@@ -125,6 +125,7 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
         editor.putString("password", password);
         editor.putString("email", email);
         editor.putString("username", username);
+        editor.putString("role", role);
         editor.apply();
     }
 

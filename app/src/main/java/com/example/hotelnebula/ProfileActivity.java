@@ -27,7 +27,7 @@ public class ProfileActivity extends AppCompatActivity implements  View.OnClickL
 
     TextView profilename,profileEmail,profilePass,profileusername;
     TextView titlename,titleusername;
-    Button siginout,editprofile,deleteProfile;
+    Button siginout,editprofile,deleteProfile, btnSchedule;
     String nameuser,emailuser,usernameuser,passuser;
 
     @Override
@@ -54,12 +54,28 @@ public class ProfileActivity extends AppCompatActivity implements  View.OnClickL
         deleteProfile = findViewById(R.id.delete);
         siginout = findViewById(R.id.siginout);
         editprofile = findViewById(R.id.editprofile);
+        btnSchedule = findViewById(R.id.btnSchedule);
 
         editprofile.setOnClickListener(this);
         siginout.setOnClickListener(this);
         deleteProfile.setOnClickListener(this);
         showAllData();
 
+        SharedPreferences preferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        String role = preferences.getString("role", "No UserAvailable");
+
+        if (!role.equals("Employee")) {
+            btnSchedule.setVisibility(View.INVISIBLE);
+        }
+
+        else
+            btnSchedule.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(ProfileActivity.this,EmployeeScheduleActivity.class);
+                    startActivity(intent);
+                }
+            });
     }
 
     @Override

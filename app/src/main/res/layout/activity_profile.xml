@@ -137,7 +137,7 @@
 
 
     <Button
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sign out"
@@ -148,15 +148,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Edit Profile"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/editprofile"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Delete my Profile"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/delete"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="See my schedule"
+        android:layout_marginTop="20dp"
+        android:id="@+id/btnSchedule"
         />
 
 
