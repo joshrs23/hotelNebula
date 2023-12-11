@@ -18,6 +18,7 @@ public class EmployeeScheduleActivity extends AppCompatActivity {
 
     TextView tvMonday, tvTuesday, tvWednesday, tvThursday, tvFriday, tvSaturday, tvSunday;
     String username;
+    DatabaseReference workersRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,20 +39,21 @@ public class EmployeeScheduleActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
         username = preferences.getString("username", "No UserAvailable");
 
-        DatabaseReference workersRef = FirebaseDatabase.getInstance().getReference("employees");
+        workersRef = FirebaseDatabase.getInstance().getReference("employees");
         Query query = workersRef.child(username);
-        query.addValueEventListener(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 DataSnapshot schedule = snapshot.child("schedule");
 
-                tvMonday.setText(schedule.child("monday").getValue().toString());
-                tvTuesday.setText(schedule.child("tuesday").getValue().toString());
-                tvWednesday.setText(schedule.child("wednesday").getValue().toString());
-                tvThursday.setText(schedule.child("thursday").getValue().toString());
-                tvFriday.setText(schedule.child("friday").getValue().toString());
-                tvSaturday.setText(schedule.child("saturday").getValue().toString());
-                tvSunday.setText(schedule.child("sunday").getValue().toString());
+                String test = schedule.child("monday").getValue(String.class).toString();
+                tvMonday.setText(schedule.child("monday").getValue(String.class).toString());
+                tvTuesday.setText(schedule.child("tuesday").getValue(String.class).toString());
+                tvWednesday.setText(schedule.child("wednesday").getValue(String.class).toString());
+                tvThursday.setText(schedule.child("thursday").getValue(String.class).toString());
+                tvFriday.setText(schedule.child("friday").getValue(String.class).toString());
+                tvSaturday.setText(schedule.child("saturday").getValue(String.class).toString());
+                tvSunday.setText(schedule.child("sunday").getValue(String.class).toString());
             }
 
             @Override
