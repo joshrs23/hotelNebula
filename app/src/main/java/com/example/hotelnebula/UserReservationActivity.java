@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -17,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import Model.Menu;
 import Model.ReservationAdapter;
 import Model.Reservations;
 import Model.UserAdapter;
@@ -31,6 +33,13 @@ public class UserReservationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_reservation);
+        try {
+            //setContentView(R.layout.activity_search);
+            Menu.setupBottomNavigationBar(this);
+        }catch(Exception e){
+            Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+
+        }
         initialize();
     }
 
