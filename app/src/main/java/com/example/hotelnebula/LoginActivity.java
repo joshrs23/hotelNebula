@@ -74,22 +74,23 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
         String passwordLogin = loginPass.getText().toString().trim();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-        Query checkuserdata = reference.orderByChild("Email").equalTo(usernameLogin);
+        Query checkuserdata = reference.orderByChild("email").equalTo(usernameLogin);
 
         checkuserdata.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                        String emailFromDB = userSnapshot.child("Email").getValue(String.class);
-                        Long passwordLong = userSnapshot.child("Password").getValue(Long.class);
-                        String passFromDB = String.valueOf(passwordLong);
+                        String emailFromDB = userSnapshot.child("email").getValue(String.class);
+                        //Long passwordLong = userSnapshot.child("password").getValue(Long.class);
+                        //String passFromDB = String.valueOf(passwordLong);
+                        String passFromDB = userSnapshot.child("password").getValue(String.class);
 
-                            if (emailFromDB.equals(usernameLogin) && passFromDB.equals(passwordLogin)) {
-                            String namedb = userSnapshot.child("Name").getValue(String.class);
+                        if (emailFromDB.equals(usernameLogin.toLowerCase()) && passFromDB.equals(passwordLogin)) {
+                            String namedb = userSnapshot.child("name").getValue(String.class);
 
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            intent.putExtra("Name", namedb);
+                            Intent intent = new Intent(LoginActivity.this, SearchActivity.class);
+                            intent.putExtra("name", namedb);
                             Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
                             startActivity(intent);
                             finish();
