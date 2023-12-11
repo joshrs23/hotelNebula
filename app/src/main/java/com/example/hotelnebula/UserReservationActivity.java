@@ -33,21 +33,24 @@ public class UserReservationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_reservation);
-        initialize();
         try {
+            //setContentView(R.layout.activity_search);
             Menu.setupBottomNavigationBar(this);
         }catch(Exception e){
             Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
 
         }
+        initialize();
     }
 
     private void initialize() {
-        /*reservationsList = new ArrayList<>();
+        /*
+        reservationsList = new ArrayList<>();
         lvReservation = findViewById(R.id.lvReservations);
         this.checkReservation();
         reservationAdapter = new ReservationAdapter(this,reservationsList);
-        lvReservation.setAdapter(reservationAdapter);*/
+        lvReservation.setAdapter(reservationAdapter);
+        */
         reservationsList = new ArrayList<>();
         lvReservation = findViewById(R.id.lvReservations);
         reservationAdapter = new ReservationAdapter(this, new ArrayList<>());

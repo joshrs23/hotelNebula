@@ -74,6 +74,7 @@ public class ReservationAdapter extends BaseAdapter {
         imPhoto = oneItem.findViewById(R.id.imPhoto);
 
 
+        //4-Populate the widgets of one_item.xml
 
         oneReservation = (Reservations) getItem(position);
         //tvRoomName.setText(oneReservation.getUser());
@@ -98,9 +99,11 @@ public class ReservationAdapter extends BaseAdapter {
         return oneItem;
     }
     public void reloadData(ArrayList<Reservations> newReservations) {
+
         this.reservationList.clear();
         this.reservationList.addAll(newReservations);
         notifyDataSetChanged();
+
     }
 
     public void checkPhotoRoom(int room, ImageView imageView, RoomLoadedCallback callback) {
@@ -118,8 +121,8 @@ public class ReservationAdapter extends BaseAdapter {
 
                         if (roomFromDB == room) {
 
-                             photoFromDB = userSnapshot.child("photo").getValue(String.class);
-                             String nameRoom = userSnapshot.child("type").getValue(String.class);
+                            photoFromDB = userSnapshot.child("photo").getValue(String.class);
+                            String nameRoom = userSnapshot.child("type").getValue(String.class);
 
                             //callback.onPhotoLoaded(photoFromDB, imageView,nameRoom);
                             ((Activity) context).runOnUiThread(new Runnable() {
