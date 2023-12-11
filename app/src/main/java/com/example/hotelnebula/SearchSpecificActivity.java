@@ -134,11 +134,11 @@ public class SearchSpecificActivity extends AppCompatActivity implements View.On
                 Toast.makeText(this, "Arrival date cannot be after or the same as departure date.", Toast.LENGTH_LONG).show();
             } else {
                 Intent intent = new Intent(this, SearchResults.class);
-                intent.putExtra("RoomTypeTitle", roomSubtitle.getText().toString());
-                intent.putExtra("ArrivalDate", arrivalDateString);
-                intent.putExtra("DepartureDate", departureDateString);
-                intent.putExtra("NumberOfPersons", selectedPersons);
-                intent.putExtra("RoomType", roomType);
+//                intent.putExtra("RoomTypeTitle", roomSubtitle.getText().toString());
+//                intent.putExtra("ArrivalDate", arrivalDateString);
+//                intent.putExtra("DepartureDate", departureDateString);
+//                intent.putExtra("NumberOfPersons", selectedPersons);
+//                intent.putExtra("RoomType", roomType);
 
                 startActivity(intent);
             }

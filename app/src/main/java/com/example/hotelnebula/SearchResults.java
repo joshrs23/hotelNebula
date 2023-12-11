@@ -35,18 +35,18 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
 
     private void initilize() {
         btnBack = findViewById(R.id.btnBack);
-        btnReserve = findViewById(R.id.btnReserve);
-        btnReserve.setOnClickListener(this);
         btnBack.setOnClickListener(this);
+        tvDescription = findViewById(R.id.tvDescription);
+        tvDescription.setText("Room reserved!, look into your reservations.");
 
-        Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("RoomType") && intent.hasExtra("ImageResource")) {
-            String roomType = intent.getStringExtra("RoomType");
-            String imageResource = intent.getStringExtra("ImageResource");
-            int resID = getResources().getIdentifier(imageResource, "drawable", getPackageName());
-            ivRoom.setImageResource(resID);
-            //findRoom(intent);
-        }
+//        Intent intent = getIntent();
+//        if (intent != null && intent.hasExtra("RoomType") ) {
+//            String roomType = intent.getStringExtra("RoomType");
+//            int resID = getResources().getIdentifier(roomType, "drawable", getPackageName());
+//            ivRoom.setImageResource(resID);
+//            tvDescription.setText("Room reserved!, look into your reservations.");
+//            findRoom(intent);
+//        }
     }
 
 //    private void findRoom(Intent intent) {
@@ -101,9 +101,9 @@ public class SearchResults extends AppCompatActivity implements View.OnClickList
         if(id == R.id.btnBack){
             finish();
         }
-        if(id == R.id.btnReserve){
-            reserveRoom();
-        }
+//        if(id == R.id.btnReserve){
+//            reserveRoom();
+//        }
     }
 
     private void reserveRoom() {
