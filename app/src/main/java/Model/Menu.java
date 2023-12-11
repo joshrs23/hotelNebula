@@ -25,20 +25,20 @@ public class Menu {
         btnReservations.setOnClickListener(v -> navigateTo(activity, UserReservationActivity.class));
         btnProfile.setOnClickListener(v -> navigateTo(activity, ProfileActivity.class));
     }
-/*
-    private void navigateToHome() {
-        Intent intent = new Intent(this, SearchActivity.class);
-        startActivity(intent);
-    }
+    /*
+        private void navigateToHome() {
+            Intent intent = new Intent(this, SearchActivity.class);
+            startActivity(intent);
+        }
 
-    private void navigateToReservations() {
-        // Implementa la navegación a Reservations
-    }
+        private void navigateToReservations() {
+            // Implementa la navegación a Reservations
+        }
 
-    private void navigateToProfile() {
-        Intent intent = new Intent(this, ProfileActivity.class);
-        startActivity(intent);
-    }*/
+        private void navigateToProfile() {
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
+        }*/
     private static void navigateTo(Activity currentActivity, Class<?> targetActivityClass) {
         if (currentActivity.getClass() != targetActivityClass) {
             try {
