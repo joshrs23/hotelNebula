@@ -35,8 +35,8 @@ public class UserReservationActivity extends AppCompatActivity {
     }
 
     private void initialize() {
+        reservationsList = new ArrayList<>();
         lvReservation = findViewById(R.id.lvReservations);
-        //reservationsList = FileManagement.readFile(this,"players.txt");
         this.checkReservation();
         reservationAdapter = new ReservationAdapter(this,reservationsList);
         lvReservation.setAdapter(reservationAdapter);

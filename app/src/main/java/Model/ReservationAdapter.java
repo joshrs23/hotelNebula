@@ -1,5 +1,6 @@
 package Model;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -76,17 +77,29 @@ public class ReservationAdapter extends BaseAdapter {
         //4-Populate the widgets of one_item.xml
 
         oneReservation = (Reservations) getItem(position);
-        tvRoomName.setText(oneReservation.getUser());
+        //tvRoomName.setText(oneReservation.getUser());
         tvEvendate.setText(oneReservation.getReservationDate());
-        this.checkPhotoRoom(oneReservation.getRoomdId());
-        String photoName = this.photoFromDB;
-        int imPhotoRes = context.getResources().getIdentifier("drawable/"+photoName,null,context.getPackageName());
-        imPhoto.setImageResource(imPhotoRes);
+        //this.checkPhotoRoom(oneReservation.getRoomdId());
+        //String photoName = photoFromDB;
+
+        /*int imPhotoRes = context.getResources().getIdentifier("drawable/"+photoName,null,context.getPackageName());
+        imPhoto.setImageResource(imPhotoRes);*/
+        checkPhotoRoom(oneReservation.getRoomdId(), imPhoto, new RoomLoadedCallback() {
+            @Override
+            public void onPhotoLoaded(String photoName, ImageView imageView, String roomName) {
+
+                tvRoomName.setText(roomName);
+                int imPhotoRes = context.getResources().getIdentifier("drawable/" + photoName, null, context.getPackageName());
+                imPhoto.setImageResource(imPhotoRes);
+            }
+
+
+        });
 
         return oneItem;
     }
 
-    public void checkPhotoRoom(int room) {
+    public void checkPhotoRoom(int room, ImageView imageView, RoomLoadedCallback callback) {
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Rooms");
         Query checkRoomdata = reference.orderByChild("id").equalTo(room);
@@ -97,12 +110,20 @@ public class ReservationAdapter extends BaseAdapter {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                        String roomFromDB = userSnapshot.child("id").getValue(String.class);
+                        int roomFromDB = userSnapshot.child("id").getValue(int.class);
 
-                        if (roomFromDB.equals(room)) {
+                        if (roomFromDB == room) {
 
                              photoFromDB = userSnapshot.child("photo").getValue(String.class);
+                             String nameRoom = userSnapshot.child("type").getValue(String.class);
 
+                            //callback.onPhotoLoaded(photoFromDB, imageView,nameRoom);
+                            ((Activity) context).runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    callback.onPhotoLoaded(photoFromDB, imageView,nameRoom);
+                                }
+                            });
                             return;
                         }
                     }
